@@ -44,7 +44,7 @@ class Sale(Base):
     __tablename__ = 'sale'
 
     id = sq.Column(sq.Integer, primary_key=True)
-    price = sq.Column(sq.Integer, nullable=False)
+    price = sq.Column(sq.Float, nullable=False)
     date_sale = sq.Column(sq.Date, nullable=False)
     id_stock = sq.Column(sq.Integer, sq.ForeignKey("stock.id"))
     count = sq.Column(sq.Integer, nullable=False)
@@ -53,4 +53,5 @@ class Sale(Base):
 
 
 def create_tables(engine):
+    Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
