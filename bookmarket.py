@@ -27,6 +27,8 @@ class Shop(Base):
     id = sq.Column(sq.Integer, primary_key=True)
     name = sq.Column(sq.String(length=40), unique=True)
 
+    stock = relationship("Stock", back_populates="shop")
+
 
 class Stock(Base):
     __tablename__ = 'stock'
@@ -37,7 +39,7 @@ class Stock(Base):
     count = sq.Column(sq.Integer, nullable=False)
 
     book = relationship(Book, backref='stock')
-    shop = relationship(Shop, backref='stock')
+    shop = relationship("Shop", back_populates="stock")
 
 
 class Sale(Base):

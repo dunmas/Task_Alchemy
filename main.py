@@ -34,7 +34,19 @@ user_input = input("Введите ID издателя или его имя: \n"
 
 if user_input.isdigit():
     search_id = int(user_input)
+
 else:
     search_publisher = user_input
+    search_id = session.query(Publisher).filter(Publisher.name == search_publisher).all()[0].id
+
+query = session.query(Sale).join(Sale.stock).join(Stock.shop).join(Stock.book).join(Book.publisher)\
+    .filter(Publisher.id == search_id)
+
+if not query.all():
+    print("There is no matches like that")
+    session.close()
+
+for s in query.all():
+    print(f'{s.stock.book.title} | {s.stock.shop.name} | {s.price} | {s.date_sale}')
 
 session.close()
